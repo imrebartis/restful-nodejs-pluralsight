@@ -11,7 +11,16 @@ var port = process.env.PORT || 3000;
 
 var bookRouter = express.Router();
 
+app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.json());
+
 bookRouter.route('/books')
+    .post(function(req, res){
+       var book = new Book(req.body);
+       book.save();
+       res.status(201).send(book) // 201 = created
+
+    })
     .get(function(req, res){
 
         var query = {};
