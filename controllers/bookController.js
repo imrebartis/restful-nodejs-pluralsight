@@ -1,10 +1,17 @@
 var bookController = function(Book){
     var post = function(req, res){
         var book = new Book(req.body);
-    
-        book.save();
-        res.status(201).send(book) // 201 = created
-    
+        
+        // making sure that created book has a title:
+        if(!req.body.title){
+            res.status(400);
+            res.send('Title is required')
+        }
+        else {
+            book.save();
+            res.status(201); // 201 = created
+            res.send(book)
+        }
      }
 
     var get = function(req, res){
